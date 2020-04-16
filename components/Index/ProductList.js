@@ -19,7 +19,7 @@ function ProductList({ products }) {
       itemsPerRow="3"
       centered
       items={mapProductsToItems(products)}
-    ></Card.Group>
+    />
   );
 }
 
