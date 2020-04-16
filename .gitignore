@@ -2,6 +2,6 @@ node_modules
 .next
 
 dist
-# now.json
+now.json
 
 next.config.js
