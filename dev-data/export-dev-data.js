@@ -4,14 +4,11 @@ const mongoose = require("mongoose");
 const Product = require("../models/Product");
 
 mongoose
-  .connect(
-    "mongodb+srv://sush1234:sush1234@cluster0-wtmas.mongodb.net/test?retryWrites=true&w=majority",
-    {
-      useNewUrlParser: true,
-      useCreateIndex: true,
-      useFindAndModify: false,
-    }
-  )
+  .connect("<PASTE IN YOUR MONGO CONNECTION SRV STRING>", {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+  })
   .then(() => console.log("DB connection successful!"));
 
 // READ FILE - products.json
