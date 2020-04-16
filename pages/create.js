@@ -64,6 +64,7 @@ function CreateProduct() {
   async function handleSubmit(event) {
     try {
       event.preventDefault();
+      setError("");
       setLoading(true);
       console.log(product);
 
