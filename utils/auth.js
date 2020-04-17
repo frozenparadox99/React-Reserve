@@ -6,3 +6,12 @@ export function handleLogin(token) {
 
   Router.push("/account");
 }
+
+export function redirectUser(ctx, location) {
+  if (ctx.req) {
+    ctx.res.writeHead(302, { Location: location });
+    ctx.res.end();
+  } else {
+    Router.push(location);
+  }
+}
