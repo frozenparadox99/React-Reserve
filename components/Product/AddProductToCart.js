@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Input } from "semantic-ui-react";
 import { useRouter } from "next/router";
-import axios from "axios ";
+import axios from "axios";
 import baseUrl from "../../utils/baseUrl";
 import cookie from "js-cookie";
 import catchErrors from "../../utils/catchErrors";
@@ -11,6 +11,16 @@ function AddProductToCart({ productId, user }) {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    let timeout;
+    if (success) {
+      timeout = setTimeout(() => setSuccess(true), 3000);
+    }
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [success]);
 
   async function handleAddProductToCart() {
     try {
