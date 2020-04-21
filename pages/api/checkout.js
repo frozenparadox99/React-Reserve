@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import jwt from "jsonwebtoken";
 
 import Cart from "../../models/Cart";
+import Order from "../../models/Order";
 import calculateCartTotal from "../../utils/calculateCartTotal";
 
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
@@ -54,9 +55,17 @@ export default async (req, res) => {
       }
     );
     // 7) Add order data to database
+    await new Order({
+      user: userId,
+      email: paymentData.email,
+      total: cartTotal,
+      products: cart.products,
+    }).save();
 
     // 8) Clear products in cart
+    await Cart.findOneAndUpdate({ _id: cart._id }, { $set: { products: [] } });
     // 9) Send success response
+    res.status(200).send("Checkout Successful");
   } catch (error) {
     console.error(error);
     res.status(500).send("Error processing charge");
