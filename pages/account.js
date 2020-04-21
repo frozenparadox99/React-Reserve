@@ -9,7 +9,7 @@ function Account({ user, orders }) {
   return (
     <>
       <AccountHeader {...user} />
-      <AccountOrders />
+      <AccountOrders orders={orders} />
     </>
   );
 }
