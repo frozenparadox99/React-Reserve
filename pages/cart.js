@@ -1,16 +1,37 @@
+import React, { useState } from "react";
+
 import CartItemList from "../components/Cart/CartItemList";
 import CartSummary from "../components/Cart/CartSummary";
 import { Segment } from "semantic-ui-react";
 import { parseCookies } from "nookies";
 import axios from "axios";
 import baseUrl from "../utils/baseUrl";
+import cookie from "js-cookie";
 
 function Cart({ products, user }) {
+  const [cartProducts, setCartProducts] = useState(products);
   console.log(products);
+
+  async function handleRemoveFromCart(productId) {
+    const url = `${baseUrl}/api/cart`;
+    const token = cookie.get("token");
+    const payload = {
+      params: { productId },
+      headers: { Authorization: token },
+    };
+
+    const response = await axios.delete(url, payload);
+    setCartProducts(response.data);
+  }
+
   return (
     <Segment>
-      <CartItemList products={products} user={user} />
-      <CartSummary products={products} />
+      <CartItemList
+        handleRemoveFromCart={handleRemoveFromCart}
+        products={cartProducts}
+        user={user}
+      />
+      <CartSummary products={cartProducts} />
     </Segment>
   );
 }
